@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Computer System</title>
+
 <style>
 body {
   margin: 0;
@@ -13,10 +14,7 @@ body {
 }
 
 .hidden { display: none; }
-
-.screen {
-  padding: 30px;
-}
+.screen { padding: 30px; }
 
 /* ===== COMPUTER SETUP ===== */
 .computer-area {
@@ -61,11 +59,7 @@ body {
   border-radius: 10px;
 }
 
-.row {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 6px;
-}
+.row { display: flex; justify-content: center; margin-bottom: 6px; }
 
 .key {
   background: #555;
@@ -74,15 +68,10 @@ body {
   min-width: 30px;
   border-radius: 4px;
   cursor: pointer;
-  user-select: none;
 }
 
-.key:hover {
-  background: #777;
-}
-
+.key:hover { background: #777; }
 .wide { min-width: 60px; }
-.wider { min-width: 80px; }
 .space { min-width: 200px; }
 
 /* ===== INSIDE COMPUTER ===== */
@@ -105,23 +94,45 @@ body {
   padding: 4px 6px;
   font-size: 14px;
   border-radius: 4px;
+  display: none; /* hidden by default */
 }
 
-/* adjust these positions to match YOUR image */
-.cpu { top: 80px; left: 260px; }
-.ram1 { top: 50px; left: 360px; }
-.ram2 { top: 50px; left: 430px; }
-.gpu { top: 220px; left: 300px; }
-.mobo { top: 150px; left: 150px; }
-.psu { top: 330px; left: 100px; }
-.ssd { top: 280px; left: 420px; }
-.fan { top: 90px; left: 90px; }
+/* adjust positions if needed */
+.l1 { top: 40px; left: 520px; }   /* DVD */
+.l2 { top: 40px; left: 120px; }   /* PSU */
+.l3 { top: 90px; left: 520px; }   /* Floppy */
+.l4 { top: 200px; left: 420px; }  /* Expansion */
+.l5 { top: 300px; left: 520px; }  /* HDD */
+.l6 { top: 200px; left: 180px; }  /* Motherboard */
+.l7 { top: 120px; left: 260px; }  /* RAM */
+.l8 { top: 160px; left: 300px; }  /* CPU */
+
+/* star button */
+.star-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  font-size: 30px;
+  background: #000;
+  color: #FFD700;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  cursor: pointer;
+}
+
+/* credit */
+.credit {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.8;
+}
 
 button {
   margin-top: 20px;
   padding: 10px 20px;
   font-size: 16px;
-  cursor: pointer;
 }
 </style>
 </head>
@@ -173,6 +184,21 @@ button {
 
   <div class="inside-image-container">
     <img src="inside.jpg" alt="Inside Computer">
+
+    <div class="label l1">(1) DVD Drive</div>
+    <div class="label l2">(2) Power Supply</div>
+    <div class="label l3">(3) Floppy Drive</div>
+    <div class="label l4">(4) Expansion Cards</div>
+    <div class="label l5">(5) Hard Disk Drive</div>
+    <div class="label l6">(6) Motherboard</div>
+    <div class="label l7">(7) RAM</div>
+    <div class="label l8">(8) CPU</div>
+
+    <div class="star-btn" id="toggleAnswers">*</div>
+  </div>
+
+  <div class="credit">
+    Image source: pchomehelper.wordpress.com
   </div>
 
   <button id="back-btn">Back</button>
@@ -183,8 +209,9 @@ const keyboard = document.getElementById("keyboard");
 const screenText = document.getElementById("screen-text");
 const mainScreen = document.getElementById("main-screen");
 const insideScreen = document.getElementById("inside-computer");
+const labels = document.querySelectorAll(".label");
 
-keyboard.addEventListener("click", e => {
+keyboard.onclick = e => {
   if (!e.target.classList.contains("key")) return;
   const key = e.target.textContent;
 
@@ -198,11 +225,17 @@ keyboard.addEventListener("click", e => {
   } else {
     screenText.textContent += key;
   }
-});
+};
 
 document.getElementById("back-btn").onclick = () => {
   insideScreen.classList.add("hidden");
   mainScreen.classList.remove("hidden");
+};
+
+document.getElementById("toggleAnswers").onclick = () => {
+  labels.forEach(l =>
+    l.style.display = l.style.display === "none" ? "block" : "none"
+  );
 };
 </script>
 
